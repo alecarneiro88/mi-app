@@ -1,53 +1,54 @@
-name: Hello World
-on:
-  push:
-    branches: ['main']
+build-and-push-image:
+  runs-on: windows-latest
 
-jobs:
-  hello_world_job:
-    runs-on: windows-latest
+  permissions:
+    contents: read
+    packages: write
+    attestations: write
+    id-token: write
 
-    steps:
-      - name: 'Hello World'
-        run: echo "Hello World"
-      - name: 'Print date'
-        run: date
-      - name: "Muestra archivos directorio sin checkout"
-        run: dir
-
-  basics_job:
-    runs-on: windows-latest
-    steps:
-      - name: 'Mi username'
-        run: |
-          echo ${{ github.actor }}
-          echo ${{ github.event_name }}
-
-  test:
-    runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: checkout repository
+      uses: actions/checkout@v4
+      - name: Log in the containeer registry
+      uses: docker/login-action@v4
+      with:
+        registry: ${{env.REGISTRY}}
+        username: ${{github.actor}}
+        password: ${{secrets.CD_TOKEN}}
+      
+      - name : build docker image
+        run: 
+          docker build . -- tag ghcr.io/alexandracarneiro/mi-app:latest
+        
+      - name : Push docker image
+        run: 
+          docker push . -- tag ghcr.io/alexandracarneiro/mi-app:latest
+        
+build-and-push-image-to-dh:
+  runs-on: windows-latest
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
+  permissions:
+    contents: read
+    packages: write
+    attestations: write
+    id-token: write
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install pytest
-          pip install coverage
 
-      - name: Verificar contenido de directorio de pruebas
-        run: dir ./test/  # Verifica que la ruta sea correcta
+    steps:
 
-      - name: Lint with Ruff
-        run: |
-          pip install ruff
-          ruff check
-        continue-on-error: true
-
-      - name: Test with pytest
-        run: |
-          coverage run -m pytest ./test/  # Asegúrate de que la ruta sea correcta
+      - name: Login to docker hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{vars.DOCKERHUB_USERNAME}}
+        password: ${{secrets.DOCKERHUB_TOKEN}}
+      
+      - name : set up docker build
+        uses: docker/setup-buildx-action@v3
+        
+      - name : Build and push
+        uses: socker/build-push-action@v6
+        with:
+          push: true
+          tags: ${{vars.DOCKERHUB_USERNAME}}/mi-app:latest
