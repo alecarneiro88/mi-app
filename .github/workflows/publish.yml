@@ -20,26 +20,30 @@ jobs:
     steps:
       - name: 'Mi username'
         run: |
-          echo ${{ github.actor}}
-          echo ${{github.event_name}}
-  
+          echo ${{ github.actor }}
+          echo ${{ github.event_name }}
+
   test:
     runs-on: windows-latest
 
     steps:
       - uses: actions/checkout@v4
-      - name : set up Python
-          uses: actions/setup-python@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          if [ -f requirements.txt]; then pip install -r requirements.txt; fi
+          if (Test-Path "requirements.txt") { pip install -r requirements.txt }
+
       - name: Lint with Ruff
         run: |
           pip install ruff
           ruff check
-        continue on error: true
-      - name: test with pytest
-        run: |
-          coverage run -m pytest -v -s
+        continue-on-error: true  # Este es el formato correcto
 
+      - name: Test with pytest
+        run: |
+          pip install coverage
+          coverage run -m pytest -v -s
