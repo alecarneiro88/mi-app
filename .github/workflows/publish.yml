@@ -9,9 +9,6 @@ on:
       - main
 
 jobs:
-  - name: List files in the mi-app directory
-    run: |
-      ls -la mi-app/
 
   run_tests_and_lint:
     runs-on: ubuntu-latest
