@@ -13,7 +13,7 @@ jobs:
       - name: 'Print date'
         run: date
       - name: "Muestra archivos directorio sin checkout"
-        run: ls -la
+        run: dir
 
   basics_job:
     runs-on: windows-latest
