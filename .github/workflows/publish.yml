@@ -1,3 +1,27 @@
+name: Hello World
+on:
+  push:
+    branches: ['main']
+build-and-push-image:
+  runs-on: windows-latest
+
+jobs:
+  hello_world_job:
+    runs-on: windows-latest
+  permissions:
+    contents: read
+    packages: write
+    attestations: write
+    id-token: write
+
+    steps:
+      - name: 'Hello World'
+        run: echo "Hello World"
+      - name: 'Print date'
+        run: date
+      - name: "Muestra archivos directorio sin checkout"
+        run: dir
+
 build-and-push-image:
   runs-on: windows-latest
 
