@@ -1,8 +1,5 @@
-# Imagen base de Nginx
-FROM nginx:alpine
+# Dockerfile para el frontend
+FROM nginx
 
-# Copiar los archivos del frontend al contenedor
-COPY ./index.html /usr/share/nginx/html/
-
-# Exponer el puerto 80
-EXPOSE 80
+# Copiar los archivos del frontend al directorio de Nginx
+COPY . /usr/share/nginx/html
