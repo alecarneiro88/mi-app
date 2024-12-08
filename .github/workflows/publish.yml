@@ -19,5 +19,6 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: 'Mi username'
-        run: echo ${{ github.actor}}
-        run: echo ${{github.event_name}}
+        run: |
+          echo ${{ github.actor}}
+          echo ${{github.event_name}}
