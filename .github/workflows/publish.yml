@@ -5,7 +5,7 @@ on:
 
 jobs:
   hello_world_job:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - name: 'Hello World'
@@ -14,3 +14,10 @@ jobs:
         run: date
       - name: "Muestra archivos directorio sin checkout"
         run: ls -la
+
+  basics_job:
+    runs-on: windows-latest
+    steps:
+      - name: 'Mi username'
+        run: echo ${{ github.actor}}
+        run: echo ${{github.event_name}}
