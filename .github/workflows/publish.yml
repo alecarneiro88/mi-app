@@ -1,19 +1,37 @@
-name: Hello World Workflow
+name: CICD Backend Workflow
+
 on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  hello_world_job:
+  run_tests_and_lint:
     runs-on: ubuntu-latest
     steps:
-      - name: Hello World
-        run: echo "Hello World"
-      - name: Print date
-        run: date
-      - name: Show directory without checkout
-        run: ls
+      - name: Check out the repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install ruff
+
+      - name: Run tests with Pytest
+        run: |
+          pytest tests/
+
+      - name: Run Lint with Ruff
+        run: |
+          ruff check mi-app/backend
 
   build-and-push-image:
     runs-on: ubuntu-latest
