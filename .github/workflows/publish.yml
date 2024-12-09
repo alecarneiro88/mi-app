@@ -74,6 +74,12 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.CD_TOKEN }}
+            - name: Debug repository structure
+            
+        run: |
+          ls -la
+          ls -la mi-app
+          ls -la mi-app/tarea_prueba
 
       - name: Build Docker image for GitHub Actions
         run: |
