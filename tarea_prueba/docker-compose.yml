@@ -1,6 +1,6 @@
 services:
   backend:
-    image: alexandracarneiro/mi-app-backend
+    image: alexandracarneiro/mi-appbackend
     container_name: backend
     ports:
       - "8080:80"
