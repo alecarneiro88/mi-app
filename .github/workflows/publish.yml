@@ -46,7 +46,7 @@ jobs:
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
-          username: ${{ vars.DOCKER_USERNAME }}
+          username: alecarneiro88
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Debug repository structure
@@ -57,7 +57,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/backend:latest mi-app/tarea_prueba/backend
+          docker build -t ghcr.io/${{ github.repository_owner }}/backend:latest tarea_prueba/backend
 
       - name: Push Docker image to DockerHub
         run: |
@@ -78,7 +78,7 @@ jobs:
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
-          username: ${{ github.actor }}
+          username: alecarneiro88
           password: ${{ secrets.CD_TOKEN }}
 
       - name: Debug repository structure
@@ -89,7 +89,7 @@ jobs:
 
       - name: Build Docker image for GitHub Actions
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/backend:latest mi-app/tarea_prueba/backend
+          docker build -t ghcr.io/${{ github.repository_owner }}/backend:latest tarea_prueba/backend
 
       - name: Push Docker image to GitHub Container Registry
         run: |
