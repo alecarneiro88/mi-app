@@ -76,8 +76,8 @@ jobs:
 
       - name: Build Docker image for GitHub Actions
         run: |
-          docker build -t ghcr.io/${ GITHUB_REPOSITORY}/backend:latest tarea_prueba/backend
+          docker build -t ghcr.io/${GITHUB_REPOSITORY}/backend:latest tarea_prueba/backend
 
       - name: Push Docker image to GitHub Container Registry
         run: |
-          docker push ghcr.io/${ GITHUB_REPOSITORY}/backend:latest
+          docker push ghcr.io/${GITHUB_REPOSITORY}/backend:latest
