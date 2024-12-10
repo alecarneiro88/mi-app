@@ -49,7 +49,7 @@ jobs:
           username: alecarneiro88
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Debug repository structure
+      - name: Debug repository structure 
         run: |
           ls -la
           ls -la mi-app
